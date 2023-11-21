@@ -1,7 +1,13 @@
-<script setup></script>
-
 <template>
-	<div>Hello Vue 3</div>
+	<div></div>
 </template>
 
-<style scoped></style>
+<script>
+export default {
+	setup() {
+		return {};
+	},
+};
+</script>
+
+<style lang="scss" scoped></style>
