@@ -1,7 +1,9 @@
 <template>
 	<main>
 		<div class="container text-center py-4">
-			<PostCreate></PostCreate>
+			<PostCreate @create-post="createPost"></PostCreate>
+			<hr class="my-4" />
+
 			<div class="row g-3">
 				<div v-for="post in posts" :key="post.id" class="col col-4">
 					<AppCard
@@ -15,6 +17,17 @@
 					<button @click="post.isLike = !post.isLike">toggle</button>
 				</div>
 			</div>
+			<hr class="my-4" />
+			<LabelInput
+				:modelValue="username"
+				@update:modelValue="newValue => (username = newValue)"
+				label="이름"
+			/>
+			<LabelTitle v-model:title="username" label="제목" />
+			<Username
+				v-model:firstname="firstname"
+				v-model:lastname="lastname"
+			></Username>
 		</div>
 	</main>
 </template>
@@ -22,12 +35,18 @@
 <script>
 import AppCard from '@/components/AppCard.vue';
 import PostCreate from './PostCreate.vue';
+import { reactive, ref } from 'vue';
+import LabelInput from './LabelInput.vue';
+import LabelTitle from './LabelTitle.vue';
+import Username from './Username.vue';
 
-import { reactive } from 'vue';
 export default {
 	components: {
 		AppCard,
 		PostCreate,
+		LabelInput,
+		LabelTitle,
+		Username,
 	},
 	setup() {
 		const obj = reactive({
@@ -71,10 +90,21 @@ export default {
 				isLike: true,
 			},
 		]);
+		const createPost = newPost => {
+			console.log('newPost: ', newPost);
+			posts.push(newPost);
+		};
+		const username = ref('');
+		const firstname = ref('');
+		const lastname = ref('');
 		return {
 			AppCard,
 			obj,
 			posts,
+			createPost,
+			username,
+			firstname,
+			lastname,
 		};
 	},
 };
